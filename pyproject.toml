@@ -1,6 +1,6 @@
 [project]
 name = "elochess"
-version = "0.1.0"
+version = "0.2.0"
 description = "A simple python package for calculating chess ratings"
 readme = "README.md"
 authors = [{ name = "Moritz Eckert", email = "MoritzEckert@web.de" }]
@@ -74,6 +74,9 @@ ignore = [
 "tests/*.py" = [
     "S101", # use of assert
 ]
+
+[tool.ruff.lint.pylint]
+max-args = 10
 
 [tool.black]
 line-length = 88

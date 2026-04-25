@@ -1,0 +1,138 @@
+[
+  {
+    "input": {
+      "current_rating": 1794,
+      "opponent_ratings": [
+        2073,
+        1938,
+        1847,
+        1986,
+        2115,
+        1902,
+        1831
+      ],
+      "score": 2.5,
+      "birth_year": 1999,
+      "evaluation_year": 2019,
+      "games_played": 11,
+      "reached_2400": false
+    },
+    "output": 1811
+  },
+  {
+    "input": {
+      "current_rating": 2717,
+      "opponent_ratings": [
+        2468,
+        2535,
+        2369,
+        2457
+      ],
+      "score": 3.5,
+      "birth_year": 1994,
+      "evaluation_year": 2026,
+      "games_played": 500,
+      "reached_2400": true
+    },
+    "output": 2719
+  },
+  {
+    "input": {
+      "current_rating": 1611,
+      "opponent_ratings": [
+        1773,
+        1976,
+        1818,
+        1882,
+        1886,
+        1968
+      ],
+      "score": 4.5,
+      "birth_year": 2006,
+      "evaluation_year": 2023,
+      "games_played": 22,
+      "reached_2400": false
+    },
+    "output": 1748
+  },
+  {
+    "input": {
+      "current_rating": 2047,
+      "opponent_ratings": [
+        1780,
+        1819,
+        2171,
+        1858,
+        1936,
+        2153,
+        1878,
+        1760,
+        1864
+      ],
+      "score": 4.5,
+      "birth_year": 2006,
+      "evaluation_year": 2026,
+      "games_played": 100,
+      "reached_2400": false
+    },
+    "output": 2017
+  },
+  {
+    "input": {
+      "current_rating": 2374,
+      "opponent_ratings": [
+        1902,
+        2090,
+        2134,
+        2457,
+        2061,
+        2275,
+        2171,
+        2348,
+        2459
+      ],
+      "score": 6.5,
+      "birth_year": 1995,
+      "evaluation_year": 2026,
+      "games_played": 300,
+      "reached_2400": false
+    },
+    "output": 2381
+  },
+  {
+    "input": {
+      "current_rating": 2813,
+      "opponent_ratings": [
+        1787,
+        2025,
+        2310,
+        2400,
+        2505
+      ],
+      "score": 4.5,
+      "birth_year": 1987,
+      "evaluation_year": 2025,
+      "games_played": 800,
+      "reached_2400": true
+    },
+    "output": 2810
+  },
+  {
+    "input": {
+      "current_rating": 1787,
+      "opponent_ratings": [
+        2813,
+        1626,
+        1675,
+        1579,
+        1742
+      ],
+      "score": 2.0,
+      "birth_year": 2015,
+      "evaluation_year": 2025,
+      "games_played": 80,
+      "reached_2400": false
+    },
+    "output": 1756
+  }
+]
