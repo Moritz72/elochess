@@ -1,0 +1,34 @@
+# elochess
+
+[![CI](https://github.com/Moritz72/elochess/actions/workflows/ci.yml/badge.svg)](https://github.com/Moritz72/py4swiss/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/Moritz72/elochess/branch/main/graph/badge.svg)](https://codecov.io/gh/Moritz72/py4swiss)
+[![Python 3.11](https://img.shields.io/badge/python-3.11+-blue)](https://img.shields.io/badge/python-3.11+-blue)
+[![Ruff](https://img.shields.io/badge/linting-ruff-blue)](https://github.com/astral-sh/ruff)
+[![mypy](https://img.shields.io/badge/types-mypy-blue)](https://github.com/python/mypy)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+`elochess` is a simple python package for calculating chess ratings.
+
+## Rating Systems
+
+Currently, the only supported rating system
+is the [Deutsche Wertungszahl](https://de.wikipedia.org/wiki/Deutsche_Wertungszahl)
+used by the [German Chess Federation](https://www.schachbund.de).
+
+## Usage
+
+```python
+from elochess.dwz import DwzCalculator
+
+current_rating = 1500
+opponent_ratings = [1642, 1425, 1032]
+score = 2.5
+
+new_rating = DwzCalculator.get_rating(
+    current_rating,
+    opponent_ratings,
+    score,
+    age=25,
+    evaluation_number=11
+)
+```
