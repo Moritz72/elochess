@@ -74,10 +74,7 @@ def get_expected_score(rating_difference: int, below_2650: bool) -> float:
     absolute_difference = abs(rating_difference)
 
     i = bisect_left(_DP_LIMITS, absolute_difference)
-    if i < len(_DP_VALUES):
-        pd = _DP_VALUES[i]
-    else:
-        pd = 1.0
+    pd = _DP_VALUES[i] if i < len(_DP_VALUES) else 1.0
 
     if sign > 0:
         return pd
