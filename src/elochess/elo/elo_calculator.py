@@ -36,7 +36,7 @@ class EloCalculator:
         return 20
 
     @classmethod
-    def get_rating(
+    def update_rating(
         cls,
         current_rating: int,
         opponent_ratings: list[int],

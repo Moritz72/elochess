@@ -11,7 +11,7 @@
       ],
       "score": 3.0,
       "age": 26,
-      "evaluation_number": 21
+      "index": 21
     },
     "output": 1886
   },
@@ -29,7 +29,7 @@
       ],
       "score": 3.5,
       "age": 18,
-      "evaluation_number": 43
+      "index": 43
     },
     "output": 1903
   },
@@ -43,7 +43,7 @@
       ],
       "score": 0.5,
       "age": 16,
-      "evaluation_number": 6
+      "index": 6
     },
     "output": 1018
   },
@@ -56,7 +56,7 @@
       ],
       "score": 1.0,
       "age": 16,
-      "evaluation_number": 5
+      "index": 5
     },
     "output": 1033
   },
@@ -71,7 +71,7 @@
       ],
       "score": 3.0,
       "age": 16,
-      "evaluation_number": 38
+      "index": 38
     },
     "output": 1910
   },
@@ -87,7 +87,7 @@
       ],
       "score": 3.5,
       "age": 24,
-      "evaluation_number": 12
+      "index": 12
     },
     "output": 1827
   }

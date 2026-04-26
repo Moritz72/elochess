@@ -1,6 +1,6 @@
 [project]
 name = "elochess"
-version = "0.2.0"
+version = "0.3.0"
 description = "A simple python package for calculating chess ratings"
 readme = "README.md"
 authors = [{ name = "Moritz Eckert", email = "MoritzEckert@web.de" }]
@@ -21,7 +21,13 @@ classifiers = [
 Homepage = "https://github.com/Moritz72/elochess"
 Repository = "https://github.com/Moritz72/elochess"
 
+[project.scripts]
+elochess-cli = "elochess.cli.app:app"
+
 [project.optional-dependencies]
+cli = [
+    "typer>=0.25.0",
+]
 dev = [
     "black>=24.0",
     "mypy>=1.0",

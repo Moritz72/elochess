@@ -11,13 +11,24 @@
 
 ## Rating Systems
 
-- [FIDE Elo](https://en.wikipedia.org/wiki/Elo_rating_system)
-used by the [FIDE](https://en.wikipedia.org/wiki/FIDE)
+- [FIDE Elo](https://en.wikipedia.org/wiki/Elo_rating_system) used by the [FIDE](https://en.wikipedia.org/wiki/FIDE)
+- [Deutsche Wertungszahl](https://de.wikipedia.org/wiki/Deutsche_Wertungszahl) used by the [German Chess Federation](https://www.schachbund.de)
 
-- [Deutsche Wertungszahl](https://de.wikipedia.org/wiki/Deutsche_Wertungszahl)
-used by the [German Chess Federation](https://www.schachbund.de)
+## Installation
+
+```bash
+pip install elochess
+```
+
+For CLI support:
+
+```bash
+pip install elochess[cli]
+```
 
 ## Usage
+
+### Python
 
 ```python
 from elochess.elo import EloCalculator
@@ -26,9 +37,20 @@ current_rating = 1500
 opponent_ratings = [1642, 1425, 1432]
 score = 2.5
 
-new_rating = EloCalculator.get_rating(
+new_rating = EloCalculator.update_rating(
     current_rating,
     opponent_ratings,
     score
 )
+```
+
+### CLI
+
+```bash
+elochess-cli \
+  --current 1500 \
+  --opponent 1642 \
+  --opponent 1425 \
+  --opponent 1432 \
+  --score 2.5
 ```
