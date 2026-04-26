@@ -22,14 +22,14 @@ class DwzCalculator:
         return round(0.5 * (1.0 + math.erf(rating_difference / 400)), 3)
 
     @classmethod
-    def get_rating(
+    def update_rating(
         cls,
         current_rating: int,
         opponent_ratings: list[int],
         score: float,
         *,
         age: int = 26,
-        evaluation_number: int = 30,
+        index: int = 30,
     ) -> int:
         """
         Return the updated rating.
@@ -47,7 +47,7 @@ class DwzCalculator:
             for opponent_rating in opponent_ratings
         )
         development = get_development_coefficient(
-            current_rating, age, evaluation_number, score > score_exp, score < score_exp
+            current_rating, age, index, score > score_exp, score < score_exp
         )
         games = len(opponent_ratings)
 

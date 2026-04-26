@@ -8,4 +8,4 @@ class DwzInputModel(InputModel):
     opponent_ratings: list[int]
     score: float
     age: int = 26
-    evaluation_number: int = 30
+    index: int = 30

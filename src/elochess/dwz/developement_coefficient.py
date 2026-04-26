@@ -70,7 +70,7 @@ def _get_deceleration_surcharge(
 def get_development_coefficient(
     current_rating: int,
     age: int,
-    evaluation_number: int,
+    index: int,
     is_above_expectation: bool,
     is_below_expectation: bool,
 ) -> int:
@@ -93,7 +93,7 @@ def get_development_coefficient(
     E_0:  Base coefficient
     f_B:  Accelaration factor
     S_Br: Decelaration surcharge
-    I:    Evaluation number
+    I:    Index
     """
     base = _get_base_coefficient(current_rating, age)
     accelaration = _get_accelaration_factor(current_rating, age, is_above_expectation)
@@ -102,7 +102,7 @@ def get_development_coefficient(
     coefficient = max(round(base * accelaration + decelaration), 5)
 
     if decelaration == 0:
-        if evaluation_number <= 5:
-            return min(coefficient, 5 * evaluation_number)
+        if index <= 5:
+            return min(coefficient, 5 * index)
         return min(coefficient, 30)
     return min(coefficient, 150)
