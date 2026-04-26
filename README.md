@@ -1,4 +1,4 @@
-# elochess
+# ♟️ elochess
 
 [![CI](https://github.com/Moritz72/elochess/actions/workflows/ci.yml/badge.svg)](https://github.com/Moritz72/elochess/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/Moritz72/elochess/branch/main/graph/badge.svg)](https://codecov.io/gh/Moritz72/elochess)
@@ -9,12 +9,12 @@
 
 `elochess` is a simple python package for calculating chess ratings.
 
-## Rating Systems
+## ✨ Rating Systems
 
-- [FIDE Elo](https://en.wikipedia.org/wiki/Elo_rating_system) used by the [FIDE](https://en.wikipedia.org/wiki/FIDE)
-- [Deutsche Wertungszahl](https://de.wikipedia.org/wiki/Deutsche_Wertungszahl) used by the [German Chess Federation](https://www.schachbund.de)
+* [FIDE Elo](https://en.wikipedia.org/wiki/Elo_rating_system) used by the [FIDE](https://en.wikipedia.org/wiki/FIDE)
+* [Deutsche Wertungszahl](https://de.wikipedia.org/wiki/Deutsche_Wertungszahl) used by the [German Chess Federation](https://www.schachbund.de)
 
-## Installation
+## 📦 Installation
 
 ```bash
 pip install elochess
@@ -26,9 +26,9 @@ For CLI support:
 pip install elochess[cli]
 ```
 
-## Usage
+## 🚀 Usage
 
-### Python
+### 🐍 Python
 
 ```python
 from elochess.elo import EloCalculator
@@ -44,13 +44,17 @@ new_rating = EloCalculator.update_rating(
 )
 ```
 
-### CLI
+### 💻 CLI
 
 ```bash
-elochess-cli \
+elochess-cli update elo \
   --current 1500 \
   --opponent 1642 \
   --opponent 1425 \
   --opponent 1432 \
   --score 2.5
 ```
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
