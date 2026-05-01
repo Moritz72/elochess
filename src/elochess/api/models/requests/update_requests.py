@@ -72,3 +72,20 @@ class UpdateEloRequest(UpdateRequest):
         description="Whether you have ever been rated 2400 or higher.",
         examples=[False],
     )
+
+
+class UpdateUscfRequest(UpdateRequest):
+    """Model for USCF rating update requests."""
+
+    games_played: Annotated[int, Field(ge=0)] = Field(
+        50,
+        title="Games Played",
+        description="The number of rated games played previously.",
+        examples=[50],
+    )
+    is_dual_rated: bool = Field(
+        default=False,
+        title="Is Dual Rated",
+        description="Whether games count for Regular and Quick ratings simultaneously.",
+        examples=[False],
+    )

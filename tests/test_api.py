@@ -31,3 +31,17 @@ def test_update_dwz() -> None:
 
     assert response.status_code == 200
     assert response.json() == {"rating": 1518}
+
+
+def test_update_uscf() -> None:
+    """Test the update USCF API route."""
+    payload = {
+        "current_rating": 1500,
+        "opponent_ratings": [1400, 1600],
+        "score": 1.5,
+    }
+
+    response = client.post("/update/uscf", json=payload)
+
+    assert response.status_code == 200
+    assert response.json() == {"rating": 1522}

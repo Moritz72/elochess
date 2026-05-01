@@ -7,12 +7,14 @@ from elochess.cli.annotations import (
     EvaluationYear,
     GamesPlayed,
     Index,
+    IsDualRated,
     OpponentRatings,
     Reached2400,
     Score,
 )
 from elochess.dwz import DwzCalculator
 from elochess.elo import EloCalculator
+from elochess.uscf import UscfCalculator
 
 update_typer = typer.Typer(
     name="update",
@@ -60,5 +62,25 @@ def get_dwz(
         score,
         age=age,
         index=index,
+    )
+    typer.echo(rating)
+
+
+@update_typer.command("uscf")
+def get_uscf(
+    current: CurrentRating,
+    opponents: OpponentRatings,
+    score: Score,
+    *,
+    games_played: GamesPlayed = 50,
+    is_dual_rated: IsDualRated = False,
+) -> None:
+    """Return the updated USCF rating."""
+    rating = UscfCalculator.update_rating(
+        current,
+        opponents,
+        score,
+        games_played=games_played,
+        is_dual_rated=is_dual_rated,
     )
     typer.echo(rating)

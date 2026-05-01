@@ -23,3 +23,10 @@ class EloInputModel(InputModel):
     evaluation_year: int | None = None
     games_played: int = 30
     reached_2400: bool = False
+
+
+class UscfInputModel(InputModel):
+    """Model for USCF rating update calculation input."""
+
+    games_played: int = 30
+    is_dual_rated: bool = False

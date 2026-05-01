@@ -82,3 +82,11 @@ Index = Annotated[
         help="The index of your latest previous evaluation if present.",
     ),
 ]
+IsDualRated = Annotated[
+    bool,
+    typer.Option(
+        "--d",
+        "-d",
+        help="Whether games count for Regular and Quick ratings simultaneously.",
+    ),
+]

@@ -1,0 +1,131 @@
+[
+  {
+    "input": {
+      "current_rating": 1900,
+      "opponent_ratings": [
+        1700,
+        1800,
+        1900,
+        2000
+      ],
+      "score": 2.5,
+      "games_played": 50,
+      "is_dual_rated": false
+    },
+    "output": 1907
+  },
+  {
+    "input": {
+      "current_rating": 2300,
+      "opponent_ratings": [
+        1700,
+        1800,
+        1900,
+        2000
+      ],
+      "score": 2.5,
+      "games_played": 50,
+      "is_dual_rated": false
+    },
+    "output": 2281
+  },
+  {
+    "input": {
+      "current_rating": 1900,
+      "opponent_ratings": [
+        1700,
+        1800,
+        1900,
+        2000
+      ],
+      "score": 2.5,
+      "games_played": 5,
+      "is_dual_rated": false
+    },
+    "output": 1922
+  },
+  {
+    "input": {
+      "current_rating": 1500,
+      "opponent_ratings": [
+        1600,
+        1200
+      ],
+      "score": 2.0,
+      "games_played": 7,
+      "is_dual_rated": false
+    },
+    "output": 1611
+  },
+  {
+    "input": {
+      "current_rating": 1500,
+      "opponent_ratings": [
+        1600,
+        1200
+      ],
+      "score": 0.0,
+      "games_played": 7,
+      "is_dual_rated": false
+    },
+    "output": 1344
+  },
+  {
+    "input": {
+      "current_rating": 2500,
+      "opponent_ratings": [
+        2500,
+        2600
+      ],
+      "score": 0.5,
+      "games_played": 50,
+      "is_dual_rated": false
+    },
+    "output": 2494
+  },
+  {
+    "input": {
+      "current_rating": 2100,
+      "opponent_ratings": [
+        1700,
+        1800,
+        1900,
+        2000
+      ],
+      "score": 2.5,
+      "games_played": 50,
+      "is_dual_rated": true
+    },
+    "output": 2085
+  },
+  {
+    "input": {
+      "current_rating": 2300,
+      "opponent_ratings": [
+        1700,
+        1800,
+        1900,
+        2000
+      ],
+      "score": 2.5,
+      "games_played": 50,
+      "is_dual_rated": true
+    },
+    "output": 2285
+  },
+  {
+    "input": {
+      "current_rating": 2600,
+      "opponent_ratings": [
+        1700,
+        1800,
+        1900,
+        2000
+      ],
+      "score": 2.5,
+      "games_played": 50,
+      "is_dual_rated": true
+    },
+    "output": 2594
+  }
+]
