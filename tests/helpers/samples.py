@@ -21,7 +21,8 @@ def _get_samples(
 ) -> list[RatingEntry[T]]:
     """Return the samples from the given file in the given format."""
     samples_file = DATA_DIRECTORY / filename
-    return TypeAdapter(list[entry_type]).validate_json(samples_file.read_text())
+    adapter = TypeAdapter(list[entry_type])  # type: ignore [valid-type]
+    return adapter.validate_json(samples_file.read_text())
 
 
 def get_elo_samples() -> list[RatingEntry[EloInputModel]]:
