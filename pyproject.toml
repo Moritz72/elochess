@@ -1,6 +1,6 @@
 [project]
 name = "elochess"
-version = "0.3.0"
+version = "0.3.1"
 requires-python = ">=3.11"
 description = "A simple python package for calculating chess ratings"
 readme = "README.md"
