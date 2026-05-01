@@ -83,8 +83,12 @@ elochess-cli update elo \
 elochess-api
 ```
 
-Check out the [OpenAPI Spec](https://swagger.io/specification/)
+Then, check out the [OpenAPI Spec](https://swagger.io/specification/)
 at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
+
+Furthermore, an instance of the API is deployed
+in the [FastAPI cloud](https://fastapicloud.com)
+at [elochess.fastapicloud.dev](https://elochess.fastapicloud.dev).
 
 ## 📄 License
 
