@@ -1,6 +1,6 @@
 [project]
 name = "elochess"
-version = "0.4.0"
+version = "0.4.1"
 requires-python = ">=3.11"
 description = "A simple python package for calculating chess ratings."
 readme = "README.md"
@@ -47,8 +47,11 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["elochess"]
 package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["elochess*"]
 
 [tool.mypy]
 files = ["src", "tests"]

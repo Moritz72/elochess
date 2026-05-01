@@ -3,6 +3,7 @@
 [![CI](https://github.com/Moritz72/elochess/actions/workflows/ci.yml/badge.svg)](https://github.com/Moritz72/elochess/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/Moritz72/elochess/branch/main/graph/badge.svg)](https://codecov.io/gh/Moritz72/elochess)
 [![Python 3.11](https://img.shields.io/badge/python-3.11+-blue)](https://img.shields.io/badge/python-3.11+-blue)
+[![uv](https://img.shields.io/badge/dependency%20manager-uv-blue)](https://github.com/astral-sh/uv)
 [![Ruff](https://img.shields.io/badge/linting-ruff-blue)](https://github.com/astral-sh/ruff)
 [![mypy](https://img.shields.io/badge/types-mypy-blue)](https://github.com/python/mypy)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
