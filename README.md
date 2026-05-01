@@ -14,6 +14,21 @@
 
 * [FIDE Elo](https://en.wikipedia.org/wiki/Elo_rating_system) used by the [FIDE](https://en.wikipedia.org/wiki/FIDE)
 * [Deutsche Wertungszahl](https://de.wikipedia.org/wiki/Deutsche_Wertungszahl) used by the [German Chess Federation](https://www.schachbund.de)
+* [USCF Rating](https://www.uscfsales.com/blogs/chess-matches/understanding-the-uscf-chess-rating-system?srsltid=AfmBOoqF_EKwyGsBCQFddl7XJ9mgGjqz-lktlDT3AOnOnnXpmjNh0ses) used by the [US Chess Federation](https://new.uschess.org)
+
+## 🎯 Accuracy
+
+This project aims to replicate the exact official rating calulations.
+
+For FIDE Elo and DWZ, the calculated ratings have been confirmed
+to be accurate in a large number of real scenarios.
+
+For USCF rating, the calculated ratings are an estimate
+based on the "official" [Rating Estimator](https://www.uschess.org/index.php/Players-Ratings/Rating-Estimator-February-2023.html).
+Here as well, it has been confirmed
+to be accurate in a large number of real scenarios.
+But keep in mind that this is a mere estimate of the real calculation
+which can only be performed by knowing all results of all players.
 
 ## 📦 Installation
 

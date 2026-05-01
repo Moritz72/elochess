@@ -43,3 +43,23 @@ def test_update_dwz() -> None:
 
     assert result.exit_code == 0
     assert result.output == "1518\n"
+
+
+def test_update_uscf() -> None:
+    """Test the update USCF CLI command."""
+    command = [
+        "update",
+        "uscf",
+        "--current",
+        "1500",
+        "--opponent",
+        "1400",
+        "--opponent",
+        "1600",
+        "--score",
+        "1.5",
+    ]
+    result = runner.invoke(app, command)
+
+    assert result.exit_code == 0
+    assert result.output == "1522\n"
