@@ -1,9 +1,14 @@
-from elochess.base import update_rating
+from elochess.base import RatingCalculator
 from elochess.elo import EloCalculator
-from helpers.samples import get_elo_samples
+from tests.helpers.samples import get_elo_samples
 
 
-def test_elo_calculator() -> None:
-    """Test Elo calculation with some sample data."""
+def test_elo_calculator_protocol() -> None:
+    """Test whether the protocol is implemented correctly."""
+    assert issubclass(EloCalculator, RatingCalculator)
+
+
+def test_elo_calculator_update_rating() -> None:
+    """Test update Elo calculation with some sample data."""
     for sample in get_elo_samples():
-        assert sample.output == update_rating(sample.input, EloCalculator)
+        assert sample.output == EloCalculator.update_rating(**sample.input.model_dump())

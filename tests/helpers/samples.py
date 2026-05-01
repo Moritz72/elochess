@@ -2,8 +2,7 @@ from pathlib import Path
 
 from pydantic import BaseModel, TypeAdapter
 
-from elochess.dwz import DwzInputModel
-from elochess.elo import EloInputModel
+from tests.helpers.input_models import DwzInputModel, EloInputModel
 
 DATA_DIRECTORY = Path(__file__).parent.parent / "data"
 
