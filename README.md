@@ -26,6 +26,12 @@ For CLI support:
 pip install elochess[cli]
 ```
 
+For API support:
+
+```bash
+pip install elochess[api]
+```
+
 ## 🚀 Usage
 
 ### 🐍 Python
@@ -54,6 +60,15 @@ elochess-cli update elo \
   --opponent 1432 \
   --score 2.5
 ```
+
+### 🌐 API
+
+```bash
+elochess-api
+```
+
+Check out the [OpenAPI Spec](https://swagger.io/specification/)
+at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 
 ## 📄 License
 
