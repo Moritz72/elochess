@@ -1,0 +1,3 @@
+[run]
+omit =
+    src/elochess/api/main.py

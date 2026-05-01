@@ -1,8 +1,8 @@
 [project]
 name = "elochess"
-version = "0.3.1"
+version = "0.4.0"
 requires-python = ">=3.11"
-description = "A simple python package for calculating chess ratings"
+description = "A simple python package for calculating chess ratings."
 readme = "README.md"
 authors = [{ name = "Moritz Eckert", email = "MoritzEckert@web.de" }]
 license = { text = "MIT" }
@@ -21,14 +21,20 @@ Homepage = "https://github.com/Moritz72/elochess"
 Repository = "https://github.com/Moritz72/elochess"
 
 [project.scripts]
+elochess-api = "elochess.api.main:main"
 elochess-cli = "elochess.cli.app:app"
 
 [project.optional-dependencies]
+api = [
+    "fastapi[standard]>=0.100.0",
+    "fastapi-cli[standard] >=0.0.15",
+    "uvicorn >= 0.23",
+]
 cli = [
     "typer>=0.25.0",
 ]
 dev = [
-    "black>=24.0",
+    "httpx>=0.24",
     "mypy>=1.0",
     "pydantic >= 2.0",
     "pytest>=7.2",
@@ -89,3 +95,6 @@ addopts = "--cov=src --cov-report=term-missing"
 [tool.coverage.report]
 show_missing = true
 skip_covered = false
+
+[tool.fastapi]
+entrypoint = "elochess.api.app:app"
