@@ -2,7 +2,6 @@ from typing import Annotated
 
 import typer
 
-
 CurrentRating = Annotated[
     int,
     typer.Option(

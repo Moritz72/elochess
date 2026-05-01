@@ -1,15 +1,15 @@
 import typer
 
 from elochess.cli.annotations import (
-    Index,
-    CurrentRating,
-    Score,
-    OpponentRatings,
     Age,
     BirthYear,
+    CurrentRating,
     EvaluationYear,
     GamesPlayed,
+    Index,
+    OpponentRatings,
     Reached2400,
+    Score,
 )
 from elochess.dwz import DwzCalculator
 from elochess.elo import EloCalculator
