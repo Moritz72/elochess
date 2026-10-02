@@ -1,6 +1,6 @@
 [project]
 name = "elochess"
-version = "0.5.0"
+version = "0.6.0"
 requires-python = ">=3.11"
 description = "A simple python package for calculating chess ratings."
 readme = "README.md"
@@ -26,20 +26,20 @@ elochess-cli = "elochess.cli.app:app"
 
 [project.optional-dependencies]
 api = [
-    "fastapi[standard]>=0.100.0",
-    "fastapi-cli[standard] >=0.0.15",
-    "uvicorn >= 0.23",
+    "fastapi[standard]>=0.138.0",
+    "fastapi-cli[standard]>=0.0.15",
+    "uvicorn>=0.23",
 ]
 cli = [
     "typer>=0.25.0",
 ]
 dev = [
-    "httpx>=0.24",
-    "mypy>=1.0",
+    "httpx2>=0.24",
     "pydantic >= 2.0",
     "pytest>=7.2",
     "pytest-cov>=7.0",
     "ruff>=0.14",
+    "ty>=0.0.50",
 ]
 
 [build-system]
@@ -81,6 +81,7 @@ ignore = [
     "D212",    # multi line summary first line
     "COM812",  # trailing comma
     "FBT001",  # boolean type positional argument
+    "CPY",     # copyright
     "PLR2004", # magic value in comparison
 ]
 

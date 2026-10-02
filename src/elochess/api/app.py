@@ -11,3 +11,4 @@ app = FastAPI(
 )
 
 app.include_router(update_router)
+app.frontend("/", directory="frontend")

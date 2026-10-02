@@ -30,7 +30,7 @@ def test_update_dwz() -> None:
     response = client.post("/update/dwz", json=payload)
 
     assert response.status_code == 200
-    assert response.json() == {"rating": 1518}
+    assert response.json() == {"rating": 1516}
 
 
 def test_update_uscf() -> None:

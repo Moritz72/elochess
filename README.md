@@ -8,7 +8,7 @@
 [![mypy](https://img.shields.io/badge/types-mypy-blue)](https://github.com/python/mypy)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-`elochess` is a simple python package for calculating chess ratings.
+`elochess` is a simple Python package for calculating chess ratings.
 
 ## ✨ Rating Systems
 
@@ -18,15 +18,15 @@
 
 ## 🎯 Accuracy
 
-This project aims to replicate the exact official rating calulations.
+This project aims to replicate the exact official rating calculations.
 
 For FIDE Elo and DWZ, the calculated ratings have been confirmed
-to be accurate in a large number of real scenarios.
+to be accurate in a decent number of real scenarios.
 
 For USCF rating, the calculated ratings are an estimate
 based on the "official" [Rating Estimator](https://www.uschess.org/index.php/Players-Ratings/Rating-Estimator-February-2023.html).
 Here as well, it has been confirmed
-to be accurate in a large number of real scenarios.
+to be accurate in a decent number of real scenarios.
 But keep in mind that this is a mere estimate of the real calculation
 which can only be performed by knowing all results of all players.
 
@@ -59,11 +59,7 @@ current_rating = 1500
 opponent_ratings = [1642, 1425, 1432]
 score = 2.5
 
-new_rating = EloCalculator.update_rating(
-    current_rating,
-    opponent_ratings,
-    score
-)
+new_rating = EloCalculator.update_rating(current_rating, opponent_ratings, score)
 ```
 
 ### 💻 CLI
@@ -83,7 +79,7 @@ elochess-cli update elo \
 elochess-api
 ```
 
-Then, check out the [OpenAPI Spec](https://swagger.io/specification/)
+Then, check out the [OpenAPI specification](https://swagger.io/specification/)
 at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 
 Furthermore, an instance of the API is deployed

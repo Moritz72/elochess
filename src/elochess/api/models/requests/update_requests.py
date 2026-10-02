@@ -38,10 +38,10 @@ class UpdateDwzRequest(UpdateRequest):
         examples=[26],
     )
     index: Annotated[int, Field(ge=0)] = Field(
-        30,
+        11,
         title="Index",
         description="The index of your latest previous evaluation if present.",
-        examples=[30],
+        examples=[11],
     )
 
 

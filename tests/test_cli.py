@@ -42,7 +42,7 @@ def test_update_dwz() -> None:
     result = runner.invoke(app, command)
 
     assert result.exit_code == 0
-    assert result.output == "1518\n"
+    assert result.output == "1516\n"
 
 
 def test_update_uscf() -> None:
