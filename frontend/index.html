@@ -173,6 +173,67 @@
     color: var(--muted);
   }
 
+  .bool-field {
+    display: grid;
+    gap: .25rem;
+    font-size: .95rem;
+  }
+
+  .field-label {
+    display: block;
+  }
+
+  .switch {
+    display: flex;
+    align-items: center;
+    width: 3rem;
+    height: 1.6rem;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .switch input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .slider {
+    position: relative;
+    width: 3rem;
+    height: 1.6rem;
+    background: var(--line);
+    border-radius: 999px;
+    transition: background .15s ease;
+  }
+
+  .slider::before {
+    content: "";
+    position: absolute;
+    width: 1.2rem;
+    height: 1.2rem;
+    left: .2rem;
+    top: .2rem;
+    border-radius: 50%;
+    background: var(--panel);
+    transition: transform .15s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+  }
+
+  .switch input:checked + .slider {
+    background: var(--accent);
+  }
+
+  .switch input:checked + .slider::before {
+    transform: translateX(1.4rem);
+  }
+
+  .advanced-fields {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
   input[type=text],
   input[type=number],
   select {
@@ -409,7 +470,14 @@
     const l = document.createElement("label");
 
     if (f.type === "bool") {
-      l.className = "check";
+      l.className = "bool-field";
+
+      const labelText = document.createElement("span");
+      labelText.className = "field-label";
+      labelText.textContent = f.label;
+
+      const control = document.createElement("label");
+      control.className = "switch";
 
       const input = document.createElement("input");
       input.type = "checkbox";
@@ -419,7 +487,11 @@
         input.checked = true;
       }
 
-      l.append(input, document.createTextNode(` ${f.label}`));
+      const slider = document.createElement("span");
+      slider.className = "slider";
+
+      control.append(input, slider);
+      l.append(labelText, control);
     }
 
     else if (f.type === "select") {
@@ -433,6 +505,10 @@
         optionElement.value = String(option.value);
         optionElement.textContent = option.label;
         select.append(optionElement);
+      }
+
+      if (f.default !== undefined) {
+        select.value = String(f.default);
       }
 
       l.append(labelText, select);
