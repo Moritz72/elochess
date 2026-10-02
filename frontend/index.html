@@ -1,167 +1,226 @@
 <!doctype html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chess rating calculator</title>
+<title>Elochess</title>
+
 <style>
   :root {
-    --bg: #eef0ec; --panel: #fbfbf8; --ink: #1d2a2a; --muted: #5d6b69;
-    --line: #c9d0cb; --accent: #2f5d62; --accent-ink: #fff; --bad: #a43a2f; --good: #2d6a3e;
+    --bg: #eef0ec;
+    --panel: #fbfbf8;
+    --ink: #1d2a2a;
+    --muted: #5d6b69;
+    --line: #c9d0cb;
+    --accent: #2f5d62;
+    --accent-ink: #fff;
+    --bad: #a43a2f;
+    --good: #2d6a3e;
     --font: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
   }
 
-@media (prefers-color-scheme: dark) {
-:root {
---bg: #14201f; --panel: #1b2b2a; --ink: #e6ece8; --muted: #9fb0ac;
---line: #36504d; --accent: #8cc3c0; --accent-ink: #11201f;
---bad: #e08a7e; --good: #8fd1a0;
-}
-}
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14201f;
+      --panel: #1b2b2a;
+      --ink: #e6ece8;
+      --muted: #9fb0ac;
+      --line: #36504d;
+      --accent: #8cc3c0;
+      --accent-ink: #11201f;
+      --bad: #e08a7e;
+      --good: #8fd1a0;
+    }
+  }
 
-* { box-sizing: border-box; }
+  * {
+    box-sizing: border-box;
+  }
 
-body {
-margin: 0;
-background: var(--bg);
-color: var(--ink);
-font: 17px/1.5 var(--font);
-}
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 17px/1.5 var(--font);
+  }
 
-main {
-max-width: 34rem;
-margin: 0 auto;
-padding: 2rem 1rem 4rem;
-}
+  main {
+    max-width: 34rem;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
 
-h1 {
-font-size: 1.7rem;
-margin: 0 0 .25rem;
-}
+  h1 {
+    font-size: 1.7rem;
+    margin: 0 0 .75rem;
+  }
 
-.method-info {
-  margin: 0 0 1rem;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--panel) 70%, var(--bg));
-  color: var(--muted);
-}
+  [role=tablist] {
+    display: flex;
+    gap: .5rem;
+    margin-bottom: 1rem;
+  }
 
-.method-info summary {
-  padding: .65rem .8rem;
-  color: var(--ink);
-  cursor: pointer;
-  font-weight: 600;
-  user-select: none;
-}
+  .tab {
+    position: relative;
+    flex: 1;
+  }
 
-.method-info summary::marker {
-  color: var(--accent);
-}
+  [role=tab] {
+    width: 100%;
+    padding: .55rem 2.25rem .55rem .55rem;
+    font: inherit;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    cursor: pointer;
+  }
 
-.method-info > div {
-  padding: 0 .8rem .75rem;
-}
+  [role=tab][aria-selected=true] {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: var(--accent);
+  }
 
-.method-info p {
-  margin: .75rem 0 0;
-}
+  .tab-info {
+    position: absolute;
+    top: 50%;
+    right: .45rem;
+    transform: translateY(-50%);
+    width: 1.4rem;
+    height: 1.4rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    font: bold .8rem/1 var(--font);
+    cursor: pointer;
+    color: var(--muted);
+    background: color-mix(in srgb, var(--panel) 75%, transparent);
+  }
 
-.method-info a {
-  color: inherit;
-}
+  [role=tab][aria-selected=true] + .tab-info {
+    color: var(--accent);
+    background: var(--accent-ink);
+  }
 
-[role=tablist] {
-display: flex;
-gap: .5rem;
-margin-bottom: 1rem;
-}
+  .tab-info:hover {
+    opacity: .8;
+  }
 
-[role=tab] {
-flex: 1;
-padding: .55rem;
-font: inherit;
-color: var(--ink);
-background: transparent;
-border: 1px solid var(--line);
-border-radius: 6px;
-cursor: pointer;
-}
+  .tab-description {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    top: calc(100% + .5rem);
+    left: 0;
+    right: 0;
+    padding: .75rem .85rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+    color: var(--muted);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .12);
+    font-size: .9rem;
+    text-align: left;
+  }
 
-[role=tab][aria-selected=true] {
-background: var(--accent);
-color: var(--accent-ink);
-border-color: var(--accent);
-}
+  .tab-description.open {
+    display: block;
+  }
 
-form {
-background: var(--panel);
-border: 1px solid var(--line);
-border-radius: 10px;
-padding: 1.25rem;
-display: grid;
-gap: 1rem;
-}
+  .tab-description::before {
+    content: "";
+    position: absolute;
+    top: -.4rem;
+    left: 50%;
+    width: .7rem;
+    height: .7rem;
+    background: var(--panel);
+    border-left: 1px solid var(--line);
+    border-top: 1px solid var(--line);
+    transform: translateX(-50%) rotate(45deg);
+  }
 
-label {
-display: grid;
-gap: .25rem;
-font-size: .95rem;
-}
+  .tab-description p {
+    margin: 0;
+  }
 
-label small {
-color: var(--muted);
-}
+  .tab-description p + p {
+    margin-top: .65rem;
+  }
 
-input[type=text],
-input[type=number],
-select {
-font: inherit;
-padding: .5rem .6rem;
-color: var(--ink);
-background: var(--bg);
-border: 1px solid var(--line);
-border-radius: 6px;
-width: 100%;
-}
+  .tab-description a {
+    color: inherit;
+  }
 
-.advanced summary {
-color: var(--muted);
-cursor: pointer;
-user-select: none;
-}
+  form {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.25rem;
+    display: grid;
+    gap: 1rem;
+  }
 
-button.go {
-font: inherit;
-padding: .65rem;
-background: var(--accent);
-color: var(--accent-ink);
-border: 0;
-border-radius: 6px;
-cursor: pointer;
-}
+  label {
+    display: grid;
+    gap: .25rem;
+    font-size: .95rem;
+  }
 
-:focus-visible {
-outline: 3px solid var(--accent);
-outline-offset: 2px;
-}
+  label small {
+    color: var(--muted);
+  }
 
-#result {
-margin-top: 1.25rem;
-min-height: 4rem;
-}
+  input[type=text],
+  input[type=number],
+  select {
+    font: inherit;
+    padding: .5rem .6rem;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    width: 100%;
+  }
 
-.rating {
-font-size: 3rem;
-line-height: 1.1;
-}
+  .advanced summary {
+    color: var(--muted);
+    cursor: pointer;
+    user-select: none;
+  }
 
-.error {
-color: var(--bad);
-white-space: pre-wrap;
-} </style>
+  button.go {
+    font: inherit;
+    padding: .65rem;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+  }
 
+  :focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  #result {
+    margin-top: 1.25rem;
+    min-height: 4rem;
+  }
+
+  .rating {
+    font-size: 3rem;
+    line-height: 1.1;
+  }
+
+  .error {
+    color: var(--bad);
+    white-space: pre-wrap;
+  }
+</style>
 </head>
 
 <body>
@@ -170,12 +229,8 @@ white-space: pre-wrap;
 
   <div role="tablist" id="tabs"></div>
 
-  <details class="method-info">
-    <summary>About</summary>
-    <div id="lead"></div>
-  </details>
-
   <form id="form" novalidate></form>
+
   <div id="result" aria-live="polite"></div>
 </main>
 
@@ -206,7 +261,7 @@ white-space: pre-wrap;
       step: 0.5,
       required: true,
       hint: "Points earned across all games (win 1, draw 0.5, loss 0)"
-    },
+    }
   ];
 
   const SYSTEMS = {
@@ -254,8 +309,9 @@ white-space: pre-wrap;
           key: "reached_2400",
           label: "Has reached 2400",
           type: "bool",
-          advanced: true
-        },
+          advanced: true,
+          default: false
+        }
       ]
     },
 
@@ -264,7 +320,7 @@ white-space: pre-wrap;
       description: `
         <p>
           The calculation is performed according to the rules that went into
-          effect on the 8th of June, see
+          effect on the 8th of June 2026, see
           <a href="https://www.schachbund.de/wertungsordnung.html"
              target="_blank"
              rel="noopener noreferrer">
@@ -329,22 +385,23 @@ white-space: pre-wrap;
           key: "games_played",
           label: "Games played so far",
           min: 0,
+          default: 0,
           type: "number"
         },
         {
           key: "is_dual_rated",
           label: "Dual rated",
           type: "bool",
-          advanced: true
-        },
+          advanced: true,
+          default: false
+        }
       ]
-    },
+    }
   };
 
   const tabs = document.getElementById("tabs");
   const form = document.getElementById("form");
   const result = document.getElementById("result");
-  const lead = document.getElementById("lead");
 
   let current = "elo";
 
@@ -354,81 +411,152 @@ white-space: pre-wrap;
     if (f.type === "bool") {
       l.className = "check";
 
-      l.innerHTML =
-        `<input type="checkbox" name="${f.key}"> ${f.label}`;
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.name = f.key;
+
+      if (f.default === true) {
+        input.checked = true;
+      }
+
+      l.append(input, document.createTextNode(` ${f.label}`));
     }
 
     else if (f.type === "select") {
-      const options = f.options
-        .map(o => `<option value="${o.value}">
-          ${o.label}
-        </option>`)
-        .join("");
+      const labelText = document.createTextNode(f.label);
 
-      l.innerHTML =
-        `${f.label}<select name="${f.key}">${options}</select>` +
-        (f.hint ? `<small>${f.hint}</small>` : "");
+      const select = document.createElement("select");
+      select.name = f.key;
+
+      for (const option of f.options) {
+        const optionElement = document.createElement("option");
+        optionElement.value = String(option.value);
+        optionElement.textContent = option.label;
+        select.append(optionElement);
+      }
+
+      l.append(labelText, select);
+
+      if (f.hint) {
+        const hint = document.createElement("small");
+        hint.textContent = f.hint;
+        l.append(hint);
+      }
     }
 
     else {
-      const t = f.type === "list" ? "text" : "number";
+      const input = document.createElement("input");
 
-      const attributes = [];
+      input.type = f.type === "list" ? "text" : "number";
+      input.name = f.key;
 
       if (f.required) {
-        attributes.push("required");
+        input.required = true;
       }
 
-      if (t === "number") {
-        attributes.push(`step="${f.step ?? "any"}"`);
+      if (f.type !== "list") {
+        input.step = String(f.step ?? "any");
       }
 
       if (f.min !== undefined) {
-        attributes.push(`min="${f.min}"`);
+        input.min = String(f.min);
       }
 
       if (f.max !== undefined) {
-        attributes.push(`max="${f.max}"`);
+        input.max = String(f.max);
       }
 
-      l.innerHTML =
-        `${f.label}<input type="${t}" name="${f.key}"
-         ${attributes.join(" ")}>` +
-        (f.hint ? `<small>${f.hint}</small>` : "");
+      if (f.default !== undefined) {
+        input.value = String(f.default);
+      }
+
+      l.append(document.createTextNode(f.label), input);
+
+      if (f.hint) {
+        const hint = document.createElement("small");
+        hint.textContent = f.hint;
+        l.append(hint);
+      }
     }
 
     return l;
   }
 
+  function closeDescriptions(except = null) {
+    document.querySelectorAll(".tab-description.open").forEach(description => {
+      if (description !== except) {
+        description.classList.remove("open");
+      }
+    });
+  }
+
   function render() {
-    lead.innerHTML = SYSTEMS[current].description;
+    const system = SYSTEMS[current];
 
     tabs.innerHTML = "";
 
     for (const [id, s] of Object.entries(SYSTEMS)) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "tab";
+
       const b = document.createElement("button");
 
       b.type = "button";
-      b.role = "tab";
+      b.setAttribute("role", "tab");
       b.textContent = s.label;
-      b.setAttribute("aria-selected", id === current);
+      b.setAttribute("aria-selected", String(id === current));
+      b.tabIndex = id === current ? 0 : -1;
 
-      b.onclick = () => {
+      b.addEventListener("click", () => {
+        if (current === id) {
+          return;
+        }
+
         current = id;
         result.innerHTML = "";
+        closeDescriptions();
         render();
-      };
+      });
 
-      tabs.append(b);
+      const info = document.createElement("button");
+
+      info.type = "button";
+      info.className = "tab-info";
+      info.textContent = "i";
+      info.setAttribute("aria-label", `About ${s.label}`);
+      info.setAttribute("aria-expanded", "false");
+
+      const description = document.createElement("div");
+      description.className = "tab-description";
+      description.innerHTML = s.description;
+
+      info.addEventListener("click", (e) => {
+        e.stopPropagation();
+
+        const isOpen = description.classList.contains("open");
+
+        closeDescriptions(description);
+
+        description.classList.toggle("open", !isOpen);
+        info.setAttribute("aria-expanded", String(!isOpen));
+      });
+
+      wrapper.append(b, info, description);
+      tabs.append(wrapper);
     }
 
     form.innerHTML = "";
 
-    const fields = [...COMMON, ...SYSTEMS[current].extra];
-    const advancedFields = fields.filter(f => f.advanced && !f.hidden);
+    const fields = [...COMMON, ...system.extra];
+
+    const advancedFields = fields.filter(
+      f => f.advanced && !f.hidden
+    );
 
     for (const f of fields) {
-      if (f.hidden || f.advanced) continue;
+      if (f.hidden || f.advanced) {
+        continue;
+      }
 
       form.append(renderField(f));
     }
@@ -451,67 +579,128 @@ white-space: pre-wrap;
       form.append(details);
     }
 
-    form.insertAdjacentHTML(
-      "beforeend",
-      '<button class="go" type="submit">Calculate rating</button>'
-    );
+    const submit = document.createElement("button");
+    submit.className = "go";
+    submit.type = "submit";
+    submit.textContent = "Calculate rating";
 
-    for (const f of SYSTEMS[current].extra) {
-      if (f.default === undefined || f.hidden) continue;
+    form.append(submit);
+  }
 
-      const el = form.elements[f.key];
-
-      if (f.type === "select" || f.type === "number") {
-        el.value = String(f.default);
-      }
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".tab")) {
+      closeDescriptions();
     }
+  });
+
+  function getFieldElement(key) {
+    return form.elements.namedItem(key);
   }
 
   function buildPayload() {
     const payload = {};
 
     for (const f of [...COMMON, ...SYSTEMS[current].extra]) {
-      const el = form.elements[f.key];
+      if (f.hidden) {
+        continue;
+      }
 
-      if (f.hidden) continue;
+      const el = getFieldElement(f.key);
+
+      if (!el) {
+        throw new Error(`Missing form field: ${f.key}`);
+      }
 
       if (f.type === "bool") {
         payload[f.key] = el.checked;
         continue;
       }
 
-      const v = el.value.trim();
+      const rawValue = el.value.trim();
 
-      if (v === "") continue;
+      if (rawValue === "") {
+        continue;
+      }
 
       if (f.type === "list") {
-        payload[f.key] = v
+        const values = rawValue
           .split(/[,\s;]+/)
           .filter(Boolean)
           .map(Number);
+
+        if (
+          values.length === 0 ||
+          values.some(value => !Number.isFinite(value))
+        ) {
+          throw new Error(
+            `${f.label} must contain only numbers separated by commas, spaces, or semicolons.`
+          );
+        }
+
+        payload[f.key] = values;
       }
 
       else {
-        payload[f.key] = Number(v);
+        const value = Number(rawValue);
+
+        if (!Number.isFinite(value)) {
+          throw new Error(`${f.label} must be a valid number.`);
+        }
+
+        payload[f.key] = value;
       }
     }
 
-    if (current === "dwz") {
-      if (payload.index !== undefined) {
-        payload.index = payload.index > 10 ? 11 : payload.index;
-      }
+    if (current === "dwz" && payload.index !== undefined) {
+      payload.index = Math.min(payload.index, 11);
     }
 
-    if (current === "uscf") {
-      if (payload.games_played !== undefined) {
-        payload.games_played = Math.max(
-          0,
-          Math.min(payload.games_played, 30)
-        );
-      }
+    if (current === "uscf" && payload.games_played !== undefined) {
+      payload.games_played = Math.max(
+        0,
+        Math.min(payload.games_played, 30)
+      );
     }
 
     return payload;
+  }
+
+  async function readApiResponse(res) {
+    const contentType = res.headers.get("content-type") || "";
+
+    if (contentType.includes("application/json")) {
+      return await res.json();
+    }
+
+    const text = await res.text();
+
+    return {
+      detail: text || res.statusText || "The server returned an empty response."
+    };
+  }
+
+  function formatApiError(data, fallback) {
+    if (Array.isArray(data?.detail)) {
+      return data.detail
+        .map(d => {
+          const location = Array.isArray(d?.loc)
+            ? d.loc.slice(1).join(".")
+            : "";
+
+          const message = d?.msg || "Invalid value.";
+
+          return location
+            ? `${location}: ${message}`
+            : message;
+        })
+        .join("\n");
+    }
+
+    if (typeof data?.detail === "string") {
+      return data.detail;
+    }
+
+    return fallback;
   }
 
   form.addEventListener("submit", async (e) => {
@@ -522,7 +711,18 @@ white-space: pre-wrap;
       return;
     }
 
-    const payload = buildPayload();
+    let payload;
+
+    try {
+      payload = buildPayload();
+    }
+
+    catch (err) {
+      result.innerHTML = '<div class="error"></div>';
+      result.firstChild.textContent =
+        err instanceof Error ? err.message : "Invalid input.";
+      return;
+    }
 
     result.textContent = "Calculating…";
 
@@ -530,42 +730,58 @@ white-space: pre-wrap;
       const res = await fetch(`${API_BASE}/update/${current}`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Accept": "application/json"
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(payload)
       });
 
-      const data = await res.json();
+      const data = await readApiResponse(res);
 
       if (!res.ok) {
-        const detail = Array.isArray(data.detail)
-          ? data.detail
-              .map(d => `${d.loc.slice(1).join(".")}: ${d.msg}`)
-              .join("\n")
-          : (data.detail || res.statusText);
-
-        result.innerHTML = `<div class="error"></div>`;
-        result.firstChild.textContent = detail;
+        result.innerHTML = '<div class="error"></div>';
+        result.firstChild.textContent = formatApiError(
+          data,
+          res.statusText || "The calculation failed."
+        );
         return;
       }
 
-      const diff = data.rating - payload.current_rating;
+      const rating = Number(data?.rating);
+
+      if (!Number.isFinite(rating)) {
+        throw new Error("The API returned an invalid rating.");
+      }
+
+      const currentRating = Number(payload.current_rating);
+
+      if (!Number.isFinite(currentRating)) {
+        throw new Error("The current rating is invalid.");
+      }
+
+      const diff = rating - currentRating;
       const sign = diff > 0 ? "+" : "";
 
       result.innerHTML = `
-        <div class="rating">${data.rating}</div>
-        <div class="delta ${diff >= 0 ? "up" : "down"}">
-          ${sign}${Math.round(diff * 100) / 100}
-          from ${payload.current_rating}
-        </div>
+        <div class="rating"></div>
+        <div class="delta ${diff >= 0 ? "up" : "down"}"></div>
       `;
+
+      result.querySelector(".rating").textContent = rating;
+      result.querySelector(".delta").textContent =
+        `${sign}${Math.round(diff * 100) / 100} from ${currentRating}`;
     }
 
     catch (err) {
-      result.innerHTML =
-        `<div class="error">
-          Could not reach the API. Check that the server is running.
-        </div>`;
+      result.innerHTML = '<div class="error"></div>';
+      result.firstChild.textContent =
+        err instanceof TypeError
+          ? "Could not reach the API. Check that the server is running."
+          : (
+              err instanceof Error
+                ? err.message
+                : "Something went wrong while calculating the rating."
+            );
     }
   });
 
