@@ -45,14 +45,20 @@
   }
 
   main {
-    max-width: 34rem;
+    max-width: 30rem;
     margin: 0 auto;
     padding: 2rem 1rem 4rem;
   }
 
-  h1 {
-    font-size: 1.7rem;
-    margin: 0 0 .75rem;
+  .intro {
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .intro p {
+    margin: .5rem 0 0;
+    color: var(--muted);
+    font-size: .95rem;
   }
 
   [role=tablist] {
@@ -68,7 +74,7 @@
 
   [role=tab] {
     width: 100%;
-    padding: .55rem 2.25rem .55rem .55rem;
+    padding: .55rem 1.75rem .55rem .55rem;
     font: inherit;
     color: var(--ink);
     background: transparent;
@@ -158,9 +164,9 @@
     background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 10px;
-    padding: 1.25rem;
+    padding: 1rem 1.25rem;
     display: grid;
-    gap: 1rem;
+    gap: 0.5rem;
   }
 
   label {
@@ -238,6 +244,7 @@
   input[type=number],
   select {
     font: inherit;
+    height: 2.25rem;
     padding: .5rem .6rem;
     color: var(--ink);
     background: var(--bg);
@@ -264,29 +271,117 @@
 
   :focus-visible {
     outline: 3px solid var(--accent);
-    outline-offset: 2px;
   }
 
   #result {
-    margin-top: 1.25rem;
-    min-height: 4rem;
+    margin-top: 1rem;
   }
 
-  .rating {
-    font-size: 3rem;
-    line-height: 1.1;
+  .result-card {
+    min-height: 7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    padding: 0.5rem 1.25rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    text-align: center;
+    transition: background .2s ease, border-color .2s ease;
   }
 
-  .error {
+  .result-card.empty {
+    background: transparent;
+    border-style: dashed;
+  }
+
+  .result-card.empty .result-new {
+    color: var(--line);
+  }
+
+  .result-card.loading {
+    opacity: .6;
+  }
+
+  .result-label {
+    font-size: .75rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .result-new {
+    font-size: 3.5rem;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .result-meta {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    color: var(--muted);
+    font-size: .95rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pill {
+    padding: .15rem .65rem;
+    border-radius: 999px;
+    font-weight: bold;
+    background: color-mix(in srgb, currentColor 14%, transparent);
+  }
+
+  .pill.up   { color: var(--good); }
+  .pill.down { color: var(--bad); }
+  .pill.flat { color: var(--muted); }
+
+  .result-message {
+    color: var(--muted);
+    font-size: .95rem;
+  }
+
+  .result-card.error {
+    border-color: var(--bad);
+  }
+
+  .result-card.error .result-message {
     color: var(--bad);
     white-space: pre-wrap;
+  }
+
+  .result-card.done .result-new,
+  .result-card.done .result-meta {
+    animation: rise .35s ease both;
+  }
+
+  .result-card.done .result-meta {
+    animation-delay: .08s;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .result-card.done .result-new,
+    .result-card.done .result-meta {
+      animation: none;
+    }
   }
 </style>
 </head>
 
 <body>
 <main>
-  <h1>Elochess</h1>
+  <header class="intro">
+    <p>
+      Calculate rating changes across FIDE, DWZ, and USCF systems.
+    </p>
+  </header>
 
   <div role="tablist" id="tabs"></div>
 
@@ -304,7 +399,6 @@
       label: "Current rating",
       type: "number",
       min: 0,
-      default: 1500,
       required: true
     },
     {
@@ -320,8 +414,7 @@
       type: "number",
       min: 0,
       step: 0.5,
-      required: true,
-      hint: "Points earned across all games (win 1, draw 0.5, loss 0)"
+      required: true
     }
   ];
 
@@ -347,7 +440,7 @@
           max: new Date().getFullYear(),
           default: new Date().getFullYear() - 19,
           type: "number",
-          hint: `Only born ${new Date().getFullYear() - 18} or later vs. before ${new Date().getFullYear() - 18} matters, unless an evaluation year is specified.`
+          hint: `Only born ${new Date().getFullYear() - 18} or later vs. before ${new Date().getFullYear() - 18} matters.`
         },
         {
           key: "evaluation_year",
@@ -419,7 +512,8 @@
             { value: 10, label: "10" },
             { value: 11, label: "11 or more" }
           ],
-          default: 11
+          default: 11,
+          hint: "The number of previous evaluations."
         }
       ]
     },
@@ -589,9 +683,9 @@
         }
 
         current = id;
-        result.innerHTML = "";
         closeDescriptions();
         render();
+        showResult("empty");
       });
 
       const info = document.createElement("button");
@@ -661,6 +755,59 @@
     submit.textContent = "Calculate rating";
 
     form.append(submit);
+  }
+
+  function showResult(state, data = {}) {
+    const card = document.createElement("div");
+    card.className = `result-card ${state}`;
+
+    if (state === "done") {
+      const big = document.createElement("div");
+      big.className = "result-new";
+      big.textContent = data.rating;
+
+      const meta = document.createElement("div");
+      meta.className = "result-meta";
+
+      const rounded = Math.round(data.diff * 100) / 100;
+      const kind = rounded > 0 ? "up" : rounded < 0 ? "down" : "flat";
+      const arrow = rounded > 0 ? "▲" : rounded < 0 ? "▼" : "•";
+      const sign = rounded > 0 ? "+" : rounded < 0 ? "−" : "±";
+
+      const pill = document.createElement("span");
+      pill.className = `pill ${kind}`;
+      pill.textContent = `${arrow} ${sign}${Math.abs(rounded)}`;
+
+      const from = document.createElement("span");
+      from.textContent = `from ${data.old}`;
+
+      meta.append(pill, from);
+      card.append(big, meta);
+    }
+
+    else if (state === "error") {
+      const msg = document.createElement("div");
+      msg.className = "result-message";
+      msg.textContent = data.message;
+
+      card.append(msg);
+    }
+
+    else {
+      const big = document.createElement("div");
+      big.className = "result-new";
+      big.textContent = "—";
+
+      const msg = document.createElement("div");
+      msg.className = "result-message";
+      msg.textContent = state === "loading"
+        ? "Calculating…"
+        : "Your result will appear here";
+
+      card.append(big, msg);
+    }
+
+    result.replaceChildren(card);
   }
 
   document.addEventListener("click", (e) => {
@@ -794,13 +941,13 @@
     }
 
     catch (err) {
-      result.innerHTML = '<div class="error"></div>';
-      result.firstChild.textContent =
-        err instanceof Error ? err.message : "Invalid input.";
+      showResult("error", {
+        message: err instanceof Error ? err.message : "Invalid input."
+      });
       return;
     }
 
-    result.textContent = "Calculating…";
+    showResult("loading");
 
     try {
       const res = await fetch(`${API_BASE}/update/${current}`, {
@@ -815,11 +962,9 @@
       const data = await readApiResponse(res);
 
       if (!res.ok) {
-        result.innerHTML = '<div class="error"></div>';
-        result.firstChild.textContent = formatApiError(
-          data,
-          res.statusText || "The calculation failed."
-        );
+        showResult("error", {
+          message: formatApiError(data, res.statusText || "The calculation failed.")
+        });
         return;
       }
 
@@ -836,32 +981,21 @@
       }
 
       const diff = rating - currentRating;
-      const sign = diff > 0 ? "+" : "";
 
-      result.innerHTML = `
-        <div class="rating"></div>
-        <div class="delta ${diff >= 0 ? "up" : "down"}"></div>
-      `;
-
-      result.querySelector(".rating").textContent = rating;
-      result.querySelector(".delta").textContent =
-        `${sign}${Math.round(diff * 100) / 100} from ${currentRating}`;
+      showResult("done", { old: currentRating, rating, diff });
     }
 
     catch (err) {
-      result.innerHTML = '<div class="error"></div>';
-      result.firstChild.textContent =
-        err instanceof TypeError
+      showResult("error", {
+        message: err instanceof TypeError
           ? "Could not reach the API. Check that the server is running."
-          : (
-              err instanceof Error
-                ? err.message
-                : "Something went wrong while calculating the rating."
-            );
+          : (err instanceof Error ? err.message : "Something went wrong while calculating the rating.")
+      });
     }
   });
 
   render();
+  showResult("empty");
 </script>
 
 </body>

@@ -5,7 +5,7 @@
 [![Python 3.11](https://img.shields.io/badge/python-3.11+-blue)](https://img.shields.io/badge/python-3.11+-blue)
 [![uv](https://img.shields.io/badge/dependency%20manager-uv-blue)](https://github.com/astral-sh/uv)
 [![Ruff](https://img.shields.io/badge/linting-ruff-blue)](https://github.com/astral-sh/ruff)
-[![mypy](https://img.shields.io/badge/types-mypy-blue)](https://github.com/python/mypy)
+[![ty](https://img.shields.io/badge/type--checking-ty-blue)](https://github.com/astral-sh/ty)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 `elochess` is a simple Python package for calculating chess ratings.
@@ -59,7 +59,11 @@ current_rating = 1500
 opponent_ratings = [1642, 1425, 1432]
 score = 2.5
 
-new_rating = EloCalculator.update_rating(current_rating, opponent_ratings, score)
+new_rating = EloCalculator.update_rating(
+    current_rating,
+    opponent_ratings,
+    score,
+)
 ```
 
 ### 💻 CLI
@@ -73,13 +77,14 @@ elochess-cli update elo \
   --score 2.5
 ```
 
-### 🌐 API
+### 🌐 API / UI
 
 ```bash
 elochess-api
 ```
 
-Then, check out the [OpenAPI specification](https://swagger.io/specification/)
+Then, check out [http://127.0.0.1:8000](http://127.0.0.1:8000)
+or the [OpenAPI specification](https://swagger.io/specification/)
 at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 
 Furthermore, an instance of the API is deployed

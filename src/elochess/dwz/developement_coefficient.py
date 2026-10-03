@@ -74,7 +74,7 @@ def _get_deceleration_factor(current_rating: int, is_below_expectation: bool) ->
     R_0: Current rating
     """
     if current_rating < 1600 and is_below_expectation:
-        divisor = (1600 + deceleration_factor_drift)
+        divisor = 1600 + deceleration_factor_drift
         return (current_rating + deceleration_factor_drift) / divisor
     return 1.0
 
