@@ -35,7 +35,7 @@ jobs:
         run: uv run ruff check --output-format=github .
 
       - name: Type check with ty
-        run: uv ty check
+        run: uv run ty check
 
   test:
     runs-on: ubuntu-latest
