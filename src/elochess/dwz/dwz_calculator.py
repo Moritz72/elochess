@@ -29,18 +29,18 @@ class DwzCalculator:
         score: float,
         *,
         age: int = 26,
-        index: int = 30,
+        index: int = 11,
     ) -> int:
         """
         Return the updated rating.
 
-        R_n = R_0 + 800 * (W - W_e) / (E + n)
+        R_n = R_0 + K * (W - W_e),
+        where R_n is then rounded to an integer and capped below to 1100.
 
         R_0: Current rating
         W:   Score
         W_e: Exected score
-        E:   Development coefficient
-        n:   Number of rateable game
+        K:   Development coefficient
         """
         score_exp = sum(
             cls._get_expected_score(current_rating - opponent_rating)
@@ -49,7 +49,6 @@ class DwzCalculator:
         development = get_development_coefficient(
             current_rating, age, index, score > score_exp, score < score_exp
         )
-        games = len(opponent_ratings)
 
-        rating = current_rating + 800 * (score - score_exp) / (development + games)
-        return round(rating)
+        rating = current_rating + development * (score - score_exp)
+        return max(round(rating), 1100)
